@@ -1,0 +1,11 @@
+[package]
+name = "sound_fun"
+version = "0.1.0"
+edition = "2024"
+
+[[example]]
+name = "MWE_iced_test"
+
+[dependencies]
+iced = "0.14.0"
+tokio = "1.49.0"
