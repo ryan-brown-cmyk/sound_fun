@@ -15,7 +15,7 @@ Notably, the list is also in order of their implementation, as each builds on th
 
 Current state: GUI Development and Testing. 
 
-GUI: 0%
+GUI: 10%
 
 P&A: 0%
 
