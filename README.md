@@ -17,7 +17,7 @@ Current state: GUI Development and Testing.
 
 GUI: 10%
 
-P&A: 0%
+P&A: 5%
 
 Prod.: 0%
 
