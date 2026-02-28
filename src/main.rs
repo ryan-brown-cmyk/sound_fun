@@ -1,5 +1,5 @@
 use iced::widget::{button, column, row, text, grid, pick_list};  
-use iced::{Element, Length, Theme};
+use iced::{Element, Length, Theme, Task};
 
 use crate::ui::building_blocks; 
 mod ui;
@@ -20,6 +20,7 @@ struct State {
     current_state: Menus,
     current_theme: Theme,
     input_value: String,
+    audio_track: Vec<f32>
 }
 
 #[derive(Debug, Clone)]  
@@ -28,6 +29,8 @@ enum Message {
     MainNav,  
     ThemeChanged(Theme),
     InputChanged(String),
+    InputSubmitted,
+    AudioLoad(Vec<f32>),
 }  
 
 impl Default for State {  
@@ -36,26 +39,51 @@ impl Default for State {
             current_state: Menus::Main,  
             current_theme: Theme::TokyoNight,
             input_value: "".to_string(),
+            audio_track: Vec::new(),
         }  
     }  
 }  
 
 
-fn update(state: &mut State, message: Message) {  // This is with a "detached" update method, which seems to be the popular method.
+fn update(state: &mut State, message: Message) -> Task<Message> {  // This is with a "detached" update method, which seems to be the popular method.
     match message {  
         Message::SecondaryNav => {  
             state.current_state = Menus::Secondary;  
+            Task::none()
         }  
         Message::MainNav => {  
             state.current_state = Menus::Main;  
+            Task::none()
         }  
         Message::ThemeChanged(theme) => {
              state.current_theme = theme;
+             Task::none()
         } 
         Message::InputChanged(file_path) => {
             state.input_value = file_path;
+            Task::none()
 
         }
+        Message::InputSubmitted => {
+
+            Task::perform(
+                async move 
+                { 
+                    audio::file_management::open_audio("examples/test.wav".to_string(),  ".wav").await.unwrap().expect("ruh roh") 
+                },
+                |result| match result {
+                    audio_content => Message::AudioLoad(audio_content)
+                }
+
+                
+            )
+        }
+        Message::AudioLoad(audio_samples) => {
+            state.audio_track = audio_samples;
+            Task::none()
+        }
+        
+
     }  
 }  
 
@@ -87,7 +115,8 @@ fn main_view<'a>(state: &State) -> Element<'a, Message> {
                 "Input Container",  
                 "Type something...",  
                 &state.input_value,  
-                Message::InputChanged
+                Message::InputChanged,
+                Message::InputSubmitted
             ),  
             building_blocks::custom_container(  
                 column![  

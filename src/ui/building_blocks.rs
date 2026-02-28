@@ -1,5 +1,7 @@
 use iced::widget::{container, text, text_input, column};  
-use iced::{Element, Length};  
+use iced::{Element, Length};
+
+use crate::Message;  
 
 pub fn custom_container<'a, Message: 'a>(  
     content: impl Into<Element<'a, Message>>,  
@@ -29,10 +31,12 @@ pub fn file_input_container<'a, Message: Clone + 'a>(
     placeholder: &str,  
     value: &str,  
     on_input: impl Fn(String) -> Message + 'a,  
+    on_submit:  Message 
 ) -> Element<'a, Message> {  
     custom_container(  
         text_input(placeholder, value)  
             .on_input(on_input)  
+            .on_submit(on_submit)
             .width(Length::Fill),  
         title  
     )  
