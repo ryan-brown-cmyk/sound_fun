@@ -2,7 +2,7 @@
   description = "Dev Shell / General Set Up for sound_fun";
 
   inputs = {
-    nikpkgs.url = "github:NixOS/nikpkgs/nixos-unstable";
+    nikpkgs.url = "github:nixos/nikpkgs/nixos-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     flake-utils.url = "github:numtide/flake-utils";
   };
