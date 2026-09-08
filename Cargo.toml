@@ -3,10 +3,10 @@ name = "sound_fun"
 version = "0.1.0"
 edition = "2024"
 
-[[example]]
-name = "MWE_iced_test"
-
 [dependencies]
-iced = {version = "0.14.0", features = ["tokio"]}
+slint = "1.17.1"
 symphonia = "0.5.5"
-tokio = {version = "1.49.0", features = ["full"]}
+tokio = { version = "1.49.0", features = ["full"] }
+
+[build-dependencies]
+slint-build = "1.17.1"

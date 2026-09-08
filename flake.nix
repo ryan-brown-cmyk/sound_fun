@@ -29,9 +29,8 @@
             buildInputs = [
               openssl
               pkg-config
-              eza
-              fd
               rust-bin.beta.latest.default
+              fontconfig
             ];
 
             LD_LIBRARY_PATH = "$LD_LIBRARY_PATH:${
@@ -44,10 +43,6 @@
               ]
             }";
 
-            shellHook = ''
-              alias ls=eza
-              alias find=fd
-            '';
           };
       }
     );
