@@ -1,6 +1,41 @@
+import { CheckBox, Button } from "std-widgets.slint";
+export component FileInput {
+    // This is example is taken from the slink wiki for now. Will update once I get the MWE up and running.
+    width: 270px;
+    height: 40px;
+    HorizontalLayout {
+        TextInput {
+            text: "Input File here.";
+            width: max(parent.width, self.preferred-width);
+            vertical-alignment: center;
+
+            private property <length> margin: 1rem;
+
+            cursor-position-changed(position) => {
+                if position.x + self.x < margin {
+                    self.x = - position.x + margin;
+                } else if position.x + self.x > parent.width - margin - self.text-cursor-width {
+                    self.x = parent.width - position.x - margin - self.text-cursor-width;
+                }
+            }
+        }
+
+        Button {
+            text: "Quit Sibelius"; // WORKING TITLE
+          // I believe the callback for this has to be set from when we load the menu. 
+        }
+    }
+}
+
 export component MainWindow inherits Window {
-    Text {
-        text: "Hello World!";
-        color: blue;
+    GridLayout {
+        Text {
+          // this should be the title bar in layout.
+            text: "sound_fun";
+            font-size: 45pt;
+            color: rgb(91, 207, 251); // #5BCFFB
+        }
+
+        file_input := FileInput { }
     }
 }
